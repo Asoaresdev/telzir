@@ -1,0 +1,42 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: #f0f2f5;
+    
+}
+:root {
+    --orange:#da8b2a; 
+    --yellow: #f2c12e;
+    --green: #04c0ad;
+    --pink: #e28d8c;
+    --brown: #d9a87e;
+}
+@media(max-width: 1080px){
+    html{
+        font-size:93.75%;
+    }
+}
+
+@media(max-width: 720px){
+    html{
+        font-size:87.5%;
+    }
+}
+
+html {
+    font: 400 1rem 'Lato', sans-serif;
+    color: #5a3b3b;
+    /* width:1260px; */
+}
+
+ul{
+   list-style: none; 
+}
+a{
+    text-decoration: none;
+} 
+@media (max-width: 481px) {
+    html{
+        font-size:1.35rem;
+}}
