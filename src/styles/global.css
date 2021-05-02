@@ -5,13 +5,7 @@
     background: #f0f2f5;
     
 }
-:root {
-    --orange:#da8b2a; 
-    --yellow: #f2c12e;
-    --green: #04c0ad;
-    --pink: #e28d8c;
-    --brown: #d9a87e;
-}
+
 @media(max-width: 1080px){
     html{
         font-size:93.75%;

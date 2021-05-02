@@ -1,21 +1,86 @@
 import React, { useState } from 'react'
 import Header from '../components/Header'
 import { useForm } from '../hooks/useForm'
-import { HomeTitle, HomeContainer, SectionSelect, InputContainer } from '../styles/pages/Home'
+import { HomeTitle, HomeContainer, SectionSelect, InputContainer, SmiluationResult } from '../styles/pages/Home'
 
+
+const callCostPerMinute = {
+    11: {
+        16: 1.9,
+        17: 1.7,
+        18: 0.9
+    },
+    16: {11: 2.9},
+    17: {11: 2.7},
+    18: {11: 1.9},  
+   }
+   const codes = ['011', '016', '017', '018']
+
+export const calculateCostWithoutPlan = (minutes, origin, destination, costPerMinuteTable) => {
+    const originTable = costPerMinuteTable[Number(origin)]
+    if (originTable){
+        const minCost = originTable[Number(destination)]
+        const cost = Number((minutes * minCost).toFixed(2))
+        return Number(cost)
+    }
+    else
+        return Number.NaN
+}
+
+export const calculateCostWithPlan = (minutes, origin, destination, selectedPlan, costPerMinuteTable) => {
+    const originTable = costPerMinuteTable[Number(origin)]
+    if (originTable) {
+        const minCost = originTable[Number(destination)]
+        const cost = (Math.max((Number(minutes) - Number(selectedPlan)), 0) * minCost * 1.1).toFixed(2)
+
+        return Number(cost)
+    }
+    else
+        return Number.NaN
+}
 
 export default function Home() {
     const[selectedPlan, setSelectedPlan] = useState('')
     const [origin , setOrigin] = useState('')
     const [destiny , setDestiny] = useState('')
     const [minutes, setMinutes] = useState('')
+    const [callCostWithoutPlan, setCallCostWithoutPlan] = useState(null)
+    const [callCostWithPlan, setCallCostWithPlan] = useState(null)
+    const [validationService, setValidationservice] = useState('')
 
+    const { onChange } = useForm({ inputWithMinutes: '' })
 
-    const codes = ['011', '016', '017', '018']
+    const handleInput = (event) => {   
+        event.preventDefault()     
+        const { value, name } = event.target
+        onChange(value, name)        
+        setMinutes(Number(value))
+        
+    }
+
+    const submit = (event) => {  
+    
+        if(minutes && destiny && origin && selectedPlan) {            
+            const costWithoutPlan = calculateCostWithoutPlan(minutes, origin, destiny, callCostPerMinute)
+            const costWithPlan = calculateCostWithPlan(minutes, origin, destiny, selectedPlan, callCostPerMinute)            
+            setCallCostWithoutPlan(costWithoutPlan)
+            setCallCostWithPlan(costWithPlan)
+            
+            if (Number.isNaN(costWithPlan)) {
+                setValidationservice('Serviço indisponível para as áreas solicitadas')
+            } else {
+                setValidationservice('')
+            }
+            
+        }else{
+            alert('preencha todos os campos')
+        } 
+    }
+
+    
     const optionsOrigin = codes.map((item) => {
         return <option key={item} value={item}> {item}</option>
     })
-
 
     const changeSelectedPlan = (event) => {
         setSelectedPlan(event.target.value)   
@@ -26,40 +91,14 @@ export default function Home() {
     const filteredOptions = codes.filter((item) => {
         if(item !== origin)
         return item
-    }).map((item) => {
-        return  <option key={item} value={item}> {item}</option>
-    })
+        }).map((item) => {
+            return  <option key={item} value={item}> {item}</option>
+        })
+        
     const changeSelectedDestiny = (event) => {
         setDestiny(event.target.value)  
     }
 
-     function FormInput() {
-         const { form, onChange } = useForm({ inputWithMinutes: '' })
-
-         const handleInput = (event) => {
-             const { value, name } = event.target
-             onChange(value, name)
-        }
-      
-        const submit = (event) => {
-            setMinutes(form.inputWithMinutes)
-        }
-        
-         return(
-            <InputContainer>
-                <label htmlFor="">Quantos minutos você quer falar</label>
-                <input 
-                    placeholder='Minutos'
-                    type="number"
-                    value={  form.inputWithMinutes }
-                    name= { 'inputWithMinutes' }
-                    onChange={ handleInput }
-                />
-                <button onClick= { submit }>Calcular</button>
-                <p>{minutes}</p>
-            </InputContainer>
-         )
-     }
 
     return (
         <HomeContainer>
@@ -72,7 +111,7 @@ export default function Home() {
             <SectionSelect>
                 <label htmlFor="">Selecione um Plano para a simulação </label>
                 <select onChange={ changeSelectedPlan }>
-                    <option value={" "}></option>
+                    <option value={""}></option>
                     <option value="30">FaleMais 30</option>
                     <option value="60">FaleMais 60</option>
                     <option value="120">FaleMais 120</option>
@@ -80,16 +119,36 @@ export default function Home() {
                 
                 <label htmlFor="">Selecione um local de origem </label>
                 <select onChange={ changeSelectedOrigin }>
-                    <option value={" "}></option>
+                    <option value={""} ></option>
                     {optionsOrigin}
                 </select>
-                <label htmlFor="">Selecione um local de destino </label>
+                <label >Selecione um local de destino </label>
                 <select onChange={ changeSelectedDestiny }>
-                    <option value={" "}></option>
+                    <option value={""}></option>
                     {filteredOptions}
                 </select>
             </SectionSelect>
-           <FormInput />
+        
+           <InputContainer>
+            <label >Quantos minutos você quer falar</label>
+            <input 
+                placeholder='Minutos'
+                type="number"
+                name= { 'inputWithMinutes' }
+                onChange={ handleInput }
+            />
+            <button onClick= { submit }>Calcular</button>
+        </InputContainer>
+            <SmiluationResult>
+                
+                {validationService ? <p>{validationService}</p> : 
+
+                (callCostWithoutPlan && callCostWithPlan && selectedPlan && minutes && origin && destiny) ?  
+                <p>Falando {minutes} minutos  com o plano <br /> Fale Mais {selectedPlan}: ${callCostWithPlan} <br />Sem o plano: ${callCostWithoutPlan}</p> 
+                :
+                 <p> Preencha os campos</p>
+                 }    
+            </SmiluationResult>
         </HomeContainer>
     )
 }
