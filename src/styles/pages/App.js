@@ -4,5 +4,5 @@ export const AppContainer = styled.div`
     height: 100vh;
     max-width: 992px;
     margin: 0 auto;
-    /* background: #DCDDE0; */
+    /* background: #f0f2f5; */
 `

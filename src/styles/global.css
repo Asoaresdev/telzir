@@ -2,8 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background: #f0f2f5;
-    
+   
 }
 
 @media(max-width: 1080px){
@@ -20,16 +19,19 @@
 
 html {
     font: 400 1rem 'Lato', sans-serif;
-    color: #5a3b3b;
-    /* width:1260px; */
+    color: #666;
+    background: #f0f2f5;
+    
 }
 
-ul{
-   list-style: none; 
+select option:first-child {
+    color:  #ffa4a2;
+  }
+option:first-child {
+    color: green
 }
-a{
-    text-decoration: none;
-} 
+
+
 @media (max-width: 481px) {
     html{
         font-size:1.35rem;
