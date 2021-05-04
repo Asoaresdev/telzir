@@ -26,12 +26,14 @@ export default function Home() {
     const [callCostWithPlan, setCallCostWithPlan] = useState('')
     const [validationService, setValidationservice] = useState('')
 
+
     const { onChange } = useForm({ inputWithMinutes: '' })
 
     const handleInput = (event) => {   
-        event.preventDefault()     
+            
         const { value, name } = event.target
         onChange(value, name)  
+
         if(value <= 0 ){
             alert('Por favor, digite um número positivo')
         }else{      
@@ -69,6 +71,8 @@ export default function Home() {
         setOrigin(event.target.value)  
     }
     //EXCLUINDO INPUT JÁ SELECIONADO NA ORIGEM PARA MONTAR DESTINO
+    
+    // eslint-disable-next-line array-callback-return
     const filteredOptions = codes.filter((item) => {
         if(item !== origin)
         return item
@@ -79,6 +83,7 @@ export default function Home() {
     const changeSelecteddestination = (event) => {
         setDestination(event.target.value)  
     }
+
 
     return (
         <HomeContainer>
@@ -127,7 +132,7 @@ export default function Home() {
                         ? 
                         <ValidadtionParagh>{validationService}</ValidadtionParagh> 
                         : 
-                        (callCostWithoutPlan  && selectedPlan && minutes && origin && destination) 
+                        (callCostWithoutPlan ) 
                         &&  
                         <ResultParagh>Falando {minutes} minutos 
                         <br /> 😀Fale Mais {selectedPlan}: ${callCostWithPlan} 
