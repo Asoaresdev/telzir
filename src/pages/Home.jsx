@@ -17,6 +17,7 @@ const callCostPerMinute = {
    }
 const codes = ['011', '016', '017', '018']
 
+
 export default function Home() {
     const [selectedPlan, setSelectedPlan] = useState('')
     const [origin , setOrigin] = useState('')
@@ -25,12 +26,11 @@ export default function Home() {
     const [callCostWithoutPlan, setCallCostWithoutPlan] = useState('')
     const [callCostWithPlan, setCallCostWithPlan] = useState('')
     const [validationService, setValidationservice] = useState('')
-
+    const [show, setShow] = useState(false)
 
     const { onChange } = useForm({ inputWithMinutes: '' })
 
-    const handleInput = (event) => {   
-            
+    const handleInput = (event) => {     
         const { value, name } = event.target
         onChange(value, name)  
 
@@ -38,18 +38,18 @@ export default function Home() {
             alert('Por favor, digite um número positivo')
         }else{      
         setMinutes(Number(value))
+        setShow(false)  
         }  
     }
 
-    const submit = (event) => {  
-    
+    const submit = () => {  
         if(minutes && destination && origin && selectedPlan) {            
             const costWithoutPlan = calculateCostWithoutPlan(minutes, origin, destination, callCostPerMinute)
             const costWithPlan = calculateCostWithPlan(minutes, origin, destination, selectedPlan, callCostPerMinute)
 
             setCallCostWithoutPlan(costWithoutPlan)
             setCallCostWithPlan(costWithPlan)
-            
+
             if (Number.isNaN(costWithPlan)) {
                 setValidationservice('Serviço indisponível para as áreas solicitadas')
             } else {
@@ -58,6 +58,7 @@ export default function Home() {
         }else{
             alert('por favor, preencha todos os campos')
         } 
+        setShow(true)
     }
     //MONTANDO OS INPUTS
     const optionsOrigin = codes.map((item) => {
@@ -65,13 +66,13 @@ export default function Home() {
     })
 
     const changeSelectedPlan = (event) => {
-        setSelectedPlan(event.target.value)   
+        setSelectedPlan(event.target.value) 
+        setShow(false)  
     }
     const changeSelectedOrigin = (event) => {
         setOrigin(event.target.value)  
     }
     //EXCLUINDO INPUT JÁ SELECIONADO NA ORIGEM PARA MONTAR DESTINO
-    
     // eslint-disable-next-line array-callback-return
     const filteredOptions = codes.filter((item) => {
         if(item !== origin)
@@ -95,23 +96,23 @@ export default function Home() {
             <h1>Calcule o valor da ligação conforme o plano</h1>
             <Sections>
                 <SectionSelect>
-                    <label htmlFor="">Selecione um Plano para a simulação </label>
+                    <label>Selecione um Plano para a simulação </label>
                     <select required onChange={ changeSelectedPlan }>
-                        <option desabled value={""}>Escolha um plano</option>
+                        <option desabled='true' value={""}>Escolha um plano</option>
                         <option value="30">FaleMais 30</option>
                         <option value="60">FaleMais 60</option>
                         <option value="120">FaleMais 120</option>
                     </select>
                     
-                    <label htmlFor="">Selecione um local de origem </label>
+                    <label>Selecione um local de origem </label>
                     <select onChange={ changeSelectedOrigin }>
-                        <option desabled value={""} >Origem</option>
-                        {optionsOrigin}
+                        <option desabled='true' value={""} >Origem</option>
+                        { optionsOrigin }
                     </select>
-                    <label >Selecione um local de destino </label>
-                    <select desabled onChange={ changeSelecteddestination }>
+                    <label>Selecione um local de destino </label>
+                    <select desabled='true' onChange={ changeSelecteddestination }>
                         <option value={""}>Destino</option>
-                        {filteredOptions}
+                        { filteredOptions }
                     </select>
         
                     <InputContainer>
@@ -126,17 +127,20 @@ export default function Home() {
                     </InputContainer>
                 </SectionSelect>
                 <SmiluationResult>
-                    
                     {
                         validationService 
                         ? 
-                        <ValidadtionParagh>{validationService}</ValidadtionParagh> 
+                        <ValidadtionParagh>
+                            { validationService }
+                        </ValidadtionParagh> 
                         : 
-                        (callCostWithoutPlan ) 
+                        (callCostWithoutPlan && show) 
                         &&  
-                        <ResultParagh>Falando {minutes} minutos 
-                        <br /> 😀Fale Mais {selectedPlan}: ${callCostWithPlan} 
-                        <br />🙁Sem o plano: ${callCostWithoutPlan}</ResultParagh> 
+                        <ResultParagh>
+                            Falando { minutes } minutos 
+                            <br /> 😀Fale Mais { selectedPlan } : ${ callCostWithPlan } 
+                            <br />🙁Sem o plano: ${ callCostWithoutPlan }
+                        </ResultParagh> 
                     }
                 </SmiluationResult>
             </Sections>
