@@ -1,8 +1,9 @@
-# ⚛️ Telzir 📱: 
+# Telzir 📱: 
 
 <img src="https://img.shields.io/static/v1?label=React.js&message=framework&color=blue&style=plastic&logo=REACT"/> 
 
-<h2>Objetivo</h2>
+## Objetivo
+
 A aplicação, criada durante teste técnico para a Vizir, tem o seguinte desafio:
 
 A Telzir, preocupada com a transparência junto aos seus clientes, quer disponibilizar uma
@@ -12,6 +13,17 @@ plano FaleMais. O sistema deve mostrar dois valores: (1) o valor da ligação co
 sem o plano. O custo inicial de aquisição do plano deve ser desconsiderado para este
 problema.
 
+Foi desenvolvida em React, usando styled-components para estilização
+
+
+## Print das telas (monitor, celular e tablet)
+
+
+<img src="https://github.com/Asoaresdev/telzir/blob/main/imagens_readme/Captura%20de%20tela%202021-05-04%20080443.png" width="500">
+
+<img src="https://github.com/Asoaresdev/telzir/blob/main/imagens_readme/Captura%20de%20tela%202021-05-04%20080531.png" width="500">
+
+<img src="https://github.com/Asoaresdev/telzir/blob/main/imagens_readme/Captura%20de%20tela%202021-05-04%20080604.png" width="500">
 
 ## Como rodar a aplicação :computer:
 No terminal, clone o projeto:
