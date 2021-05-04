@@ -13,7 +13,7 @@ plano FaleMais. O sistema deve mostrar dois valores: (1) o valor da ligação co
 sem o plano. O custo inicial de aquisição do plano deve ser desconsiderado para este
 problema.
 
-Foi desenvolvida em React, usando styled-components para estilização.
+Foi desenvolvida em React, usando styled-components para estilização e jest para testes.
 
 
 ## Print das telas (monitor, celular e tablet)
