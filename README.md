@@ -13,7 +13,7 @@ plano FaleMais. O sistema deve mostrar dois valores: (1) o valor da ligação co
 sem o plano. O custo inicial de aquisição do plano deve ser desconsiderado para este
 problema.
 
-Foi desenvolvida em React, usando styled-components para estilização
+Foi desenvolvida em React, usando styled-components para estilização.
 
 
 ## Print das telas (monitor, celular e tablet)
@@ -24,6 +24,8 @@ Foi desenvolvida em React, usando styled-components para estilização
 <img src="https://github.com/Asoaresdev/telzir/blob/main/imagens_readme/Captura%20de%20tela%202021-05-04%20080531.png" width="500">
 
 <img src="https://github.com/Asoaresdev/telzir/blob/main/imagens_readme/Captura%20de%20tela%202021-05-04%20080604.png" width="500">
+
+
 
 ## Como rodar a aplicação :computer:
 No terminal, clone o projeto:
