@@ -1,4 +1,4 @@
-# Telzir 📱: 
+# Telzir 📱 
 
 <img src="https://img.shields.io/static/v1?label=React.js&message=framework&color=blue&style=plastic&logo=REACT"/> 
 
